@@ -1,26 +1,40 @@
 name: vault
 
-type: golang:1.8
+type: golang:1.10
 
 hooks:
     build: |
-      make setup
-      # Remove the following line if committing your vendor directory.
-      make deps
-      make
+        go get -u github.com/hashicorp/vault
+
+dependencies:
+    python:
+       redis: '*'
 
 web:
     upstream:
         socket_family: tcp
         protocol: http
-
     commands:
         start: |
-          ./bin/example
-
+            # We start Vault
+            HOME=/app/data ./go/bin/vault server -dev -dev-listen-address 0.0.0.0:8888 &
+            # then wait for it to bootstrap
+            sleep 5
+            # and finally set root token in redis for frontend to use.
+            ./update-credentials.py
+            # Now just wait.
+            sleep infinity
     locations:
         /:
             allow: false
             passthru: true
 
 disk: 256
+
+mounts:
+    'data':
+        source: local
+        source_path: 'data'
+
+relationships:
+    redis: 'redis:redis'

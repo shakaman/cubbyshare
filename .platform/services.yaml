@@ -1,1 +1,2 @@
-# I ain't got no services
+redis:
+    type: redis:3.0

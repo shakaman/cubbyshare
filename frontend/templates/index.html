@@ -1,0 +1,43 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/utils.html" as utils %}
+
+{%- extends "base.html" %}
+
+
+{% block content %}
+   <div class="container">
+      <div class="jumbotron">
+        <h1>Signup for our awesome service</h1>
+        <p>Note: Your data isn't going anywhere.</p>
+      </div>
+   <div class="col-md-12">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    
+    {% if data %}
+<pre>
+{{ data }}
+</pre>
+    {% endif %}
+
+    {% if form %}
+    <form method="POST" action="{{ url_for('frontend.add_entry') }}">
+        {{ form.csrf_token }}
+
+        {{ form.secrets.label }}
+        <br><br>
+        {{ form.secrets }}
+        <br><br>
+        {{ form.submit }}
+
+    </form>   
+    {% endif %}
+  </div>
+{%- endblock %}
