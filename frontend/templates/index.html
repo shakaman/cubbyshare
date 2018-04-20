@@ -6,10 +6,6 @@
 
 {% block content %}
    <div class="container">
-      <div class="jumbotron">
-        <h1>Signup for our awesome service</h1>
-        <p>Note: Your data isn't going anywhere.</p>
-      </div>
    <div class="col-md-12">
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -28,16 +24,20 @@
     {% endif %}
 
     {% if form %}
+
+    <section class="form-elegant">
     <form method="POST" action="{{ url_for('frontend.add_entry') }}">
         {{ form.csrf_token }}
 
-        {{ form.secrets.label }}
+        <p class="h4 text-center mb-4">Enter your secret you want to share</p>
         <br><br>
-        {{ form.secrets }}
+        <textarea type="text" id="defaultFormContactMessageEx" class="form-control" rows="6" name="secrets"></textarea>
         <br><br>
-        {{ form.submit }}
-
+        <div class="text-center mb-3">
+            <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Save my secret</button>
+        </div>
     </form>   
+    </section>
     {% endif %}
   </div>
 {%- endblock %}
