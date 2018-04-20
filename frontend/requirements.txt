@@ -1,0 +1,8 @@
+flask
+flask-bootstrap
+flask-nav
+flask-wtf
+flask-debug
+requests
+redis
+hvac
