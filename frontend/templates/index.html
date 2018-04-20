@@ -7,6 +7,16 @@
 {% block content %}
    <div class="container">
    <div class="col-md-12">
+
+    {% if data %}
+    <p class="h4 text-center mb-4">Make sure you note this somewhere.</p>
+    <p class="h4 text-center mb-4">Because it is the last time you see it..</p>
+    <br>
+<pre>
+{{ data }}
+</pre>
+    {% endif %}
+
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul class=flashes>
@@ -16,28 +26,24 @@
         </ul>
       {% endif %}
     {% endwith %}
-    
-    {% if data %}
-<pre>
-{{ data }}
-</pre>
-    {% endif %}
 
     {% if form %}
-
     <section class="form-elegant">
     <form method="POST" action="{{ url_for('frontend.add_entry') }}">
         {{ form.csrf_token }}
 
-        <p class="h4 text-center mb-4">Enter your secret you want to share</p>
+        <p class="h4 text-center mb-4">Put here the secret you want to share.</p>
+        <p class="h4 text-center mb-4">It will be available on its link for the next 24h.</p>
+        <p class="h4 text-center mb-4">After first reading, it will self-destruct.</p>
         <br><br>
         <textarea type="text" id="defaultFormContactMessageEx" class="form-control" rows="6" name="secrets"></textarea>
         <br><br>
         <div class="text-center mb-3">
             <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Save my secret</button>
         </div>
-    </form>   
+    </form>
     </section>
     {% endif %}
+
   </div>
 {%- endblock %}
