@@ -2,8 +2,12 @@
 
 {% block content %}
   <div class="container">
-    <p class="h4 text-center mb-4">About Cubbyshare.</p>
+    <p class="h3 text-center mb-4">About Cubbyshare.</p>
 
-    <p>Here goes description.</p>
+    <br><br>
+
+    <p class="h4 mb-4">It's a self-destructing secret sharing service. You put your secret, we give you link. The other party has 24h to click the link, and can access it only once.</p>
+
+    <p class="h4 mb-4">Below the deck, Cubbyshare is using Hashicorp Vault and it's cubbyhole secrets engine. For each link you create we create one token that is valid for 24h and exactly two uses. We save your secret in Vault's cubbyhole, and it is automatically destroyed after the first time it was read, or if was left sitting for more than 24h hours. No exceptions.</p>
   </div>
 {%- endblock %}
