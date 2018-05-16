@@ -26,24 +26,10 @@ nav.register_element(
 @frontend.route("/", defaults={"path": ""})
 @frontend.route("/<path:path>")
 def index(path):
-    token = path
-    if not token:
+    if not path:
         form = DataForm()
         return render_template("index.html", form=form, data="")
-
-    vault_uri = os.environ.get("VAULT_URI", None)
-    if not vault_uri:
-        flash("Missing VAULT_URI")
-        return redirect(url_for(".index"))
-
-    try:
-        cubby = hvac.Client(url=vault_uri, token=token)
-        result = cubby.read("cubbyhole/%s" % token)
-    except hvac.exceptions.Forbidden:
-        flash("Something went wrong")
-        return redirect(url_for(".index"))
-    secret = base64.b64decode(result["data"]["wrap"]).decode()
-    return render_template("index.html", form="", data=secret)
+    return render_template("index.html", form="", result_url=url_for('.get_data', path=path))
 
 
 @frontend.route("/_get_data/<path:path>")

@@ -9,7 +9,18 @@
    <div class="col-md-12">
 
     {% if data %}
-    <p><a class="btn btn-primary" href="#" role="button">Click to show the secret</a></p>
+<script type=text/javascript>
+    $(function() {
+        $('a#fetch_data').bind('click', function() {
+            $.getJSON('{{ result_url }}', function(data) {
+                $("#result").text(data.result);
+            });
+            return false;
+        });
+    });
+</script>
+
+    <p class="text-center"><a class="btn btn-primary" href="#" role="button" id="fetch_data">Click to show the secret</a></p>
     <p class="h4 text-center mb-4">Remember, this is the last time you see it.</p>
     <br>
 <pre>
