@@ -3,7 +3,7 @@ import base64
 
 import hvac
 import requests
-from flask import Blueprint, render_template, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, flash, redirect, url_for, current_app, jsonify
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
 from markupsafe import escape
@@ -44,6 +44,27 @@ def index(path):
         return redirect(url_for(".index"))
     secret = base64.b64decode(result["data"]["wrap"]).decode()
     return render_template("index.html", form="", data=secret)
+
+
+@frontend.route("/_get_data/<path:path>")
+def get_data(path):
+    token = path
+    if not token:
+        return redirect(url_for(".index"))
+
+    vault_uri = os.environ.get("VAULT_URI", None)
+    if not vault_uri:
+        flash("Missing VAULT_URI")
+        return redirect(url_for(".index"))
+
+    try:
+        cubby = hvac.Client(url=vault_uri, token=token)
+        result = cubby.read("cubbyhole/%s" % token)
+    except hvac.exceptions.Forbidden:
+        flash("Something went wrong")
+        return redirect(url_for(".index"))
+    secret = base64.b64decode(result["data"]["wrap"]).decode()
+    return jsonify(result=secret)
 
 
 @frontend.route("/add", methods=["POST"])
