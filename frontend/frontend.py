@@ -29,7 +29,7 @@ def index(path):
     if not path:
         form = DataForm()
         return render_template("index.html", form=form, data="")
-    return render_template("index.html", form="", result_url=url_for('.get_data', path=path))
+    return render_template("index.html", form="", result_url=url_for('.get_data', path=path, _external=True, _scheme='https'))
 
 
 @frontend.route("/_get_data/<path:path>")
