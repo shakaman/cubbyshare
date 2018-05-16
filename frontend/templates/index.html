@@ -9,11 +9,11 @@
    <div class="col-md-12">
 
     {% if data %}
-    <p class="h4 text-center mb-4">Make sure you note this somewhere.</p>
-    <p class="h4 text-center mb-4">Because it is the last time you see it..</p>
+    <p><a class="btn btn-primary" href="#" role="button">Click to show the secret</a></p>
+    <p class="h4 text-center mb-4">Remember, this is the last time you see it.</p>
     <br>
 <pre>
-{{ data }}
+<span id=result></span>
 </pre>
     {% endif %}
 

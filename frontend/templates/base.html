@@ -26,6 +26,11 @@
           href="{{url_for('static', filename='sample-app.css')}}">
 {% endblock %}
 
+{% block scripts -%}
+    <script type=text/javascript src="{{
+          url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+{% endblock %}
+
 {# Finally, round things out with navigation #}
 {% block navbar %}
 {{nav.frontend_top.render()}}
