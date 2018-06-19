@@ -14,7 +14,7 @@ from .nav import nav
 app = flask.Flask(__name__)
 Bootstrap(app)
 app.config["BOOTSTRAP_SERVE_LOCAL"] = True
-app.config["SECRET_KEY"] = "secretkey"
+app.config["SECRET_KEY"] = os.environ.get("PLATFORM_PROJECT_ENTROPY", "secretkey")
 app.register_blueprint(frontend)
 nav.init_app(app)
 
