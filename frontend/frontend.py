@@ -47,8 +47,7 @@ def get_data(path):
         cubby = hvac.Client(url=vault_uri, token=token)
         result = cubby.read("cubbyhole/%s" % token)
     except hvac.exceptions.Forbidden:
-        flash("Something went wrong")
-        return redirect(url_for(".index"))
+        return jsonify(result="link expired")
     secret = base64.b64decode(result["data"]["wrap"]).decode()
     return jsonify(result=secret)
 
