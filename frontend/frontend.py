@@ -2,11 +2,16 @@ import os
 import base64
 
 import hvac
-import requests
-from flask import Blueprint, render_template, flash, redirect, url_for, current_app, jsonify, request
-from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
-from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
-from markupsafe import escape
+from flask import (
+    Blueprint,
+    render_template,
+    flash,
+    redirect,
+    url_for,
+    current_app,
+    jsonify
+)
+from flask_nav.elements import Navbar, View
 
 from .forms import DataForm
 from .nav import nav
@@ -18,7 +23,9 @@ frontend = Blueprint("frontend", __name__)
 nav.register_element(
     "frontend_top",
     Navbar(
-        View("Cubbyshare", ".index"), View("Home", ".index"), View("About", ".about")
+        View("Cubbyshare", ".index"),
+        View("Home", ".index"),
+        View("About", ".about")
     ),
 )
 
@@ -29,7 +36,13 @@ def index(path):
     if not path:
         form = DataForm()
         return render_template("index.html", form=form, data="")
-    return render_template("index.html", form="", result_url=url_for('.get_data', path=path, _external=True, _scheme='https'))
+    return render_template(
+        "index.html",
+        form="",
+        result_url=url_for(
+            '.get_data', path=path, _external=True, _scheme='https'
+        )
+    )
 
 
 @frontend.route("/_get_data/<path:path>")
