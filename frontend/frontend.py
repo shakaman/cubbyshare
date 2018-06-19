@@ -3,7 +3,7 @@ import base64
 
 import hvac
 import requests
-from flask import Blueprint, render_template, flash, redirect, url_for, current_app, jsonify
+from flask import Blueprint, render_template, flash, redirect, url_for, current_app, jsonify, request
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
 from markupsafe import escape
