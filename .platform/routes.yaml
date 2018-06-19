@@ -1,7 +1,11 @@
 "https://{default}/":
     type: upstream
     upstream: "frontend:http"
+    tls:
+        min_version: TLSv1.2
 
 "https://vault.{default}/":
     type: upstream
     upstream: "vault:http"
+    tls:
+        min_version: TLSv1.2
