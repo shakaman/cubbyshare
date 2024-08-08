@@ -10,14 +10,34 @@
 
     {% if result_url %}
 <script type=text/javascript>
-    $(function() {
-        $('a#fetch_data').bind('click', function() {
-            $.getJSON('{{ result_url }}', function(data) {
-                $("#result").text(data.result);
-            });
-            return false;
-        });
-    });
+  document.addEventListener("DOMContentLoaded", function() {
+    const fetchDataLink = document.getElementById("fetch_data");
+
+    fetchDataLink.addEventListener("click", function handleClick(event) {
+      event.preventDefault(); // Prevent the default action
+
+      // Prevent further clicks by removing the event listener
+      fetchDataLink.removeEventListener("click", handleClick);
+
+      // Visually indicate the link is disabled
+      fetchDataLink.classList.add('disabled');
+
+      fetch({{ result_url }}, { method: "POST"})
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json(); // Assuming the response is JSON
+        })
+        .then(data => {
+          const resultElement = document.getElementById("result");
+          resultElement.textContent = data.result;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        })
+      });
+  });
 </script>
 
     <p class="text-center"><a class="btn btn-primary" href="#" role="button" id="fetch_data">Click to show the secret</a></p>
